@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 
-namespace MYTDotNetCoreRevision
+namespace MYTDotNetCoreRevision.AdoDotNet
 {
     internal class ExampleAdo
     {
@@ -19,7 +19,7 @@ namespace MYTDotNetCoreRevision
             //update(1,"Title2", "Author2", "Content2");
             delete(1);
         }
-        public void read() 
+        public void read()
         {
             _connection.Open();
             string query = "SELECT * FROM Tbl_BlogDotNetCore";
@@ -51,7 +51,7 @@ namespace MYTDotNetCoreRevision
             dataAdapter.Fill(dt);
             _connection.Close();
 
-            if(dt.Rows is null)
+            if (dt.Rows is null)
             {
                 Console.WriteLine("Data not found");
                 return;
@@ -63,7 +63,7 @@ namespace MYTDotNetCoreRevision
             Console.WriteLine("Blog Content => " + dr["BlogContent"]);
             Console.WriteLine("________________________________");
         }
-        
+
         public void create(string title, string author, string content)
         {
             string query = @"
@@ -77,7 +77,7 @@ INSERT INTO [dbo].[Tbl_BlogDotNetCore]
            ,@BlogContent)";
             _connection.Open();
             SqlCommand cmd = new SqlCommand(query, _connection);
-            cmd.Parameters.AddWithValue("@BlogTitle", title); 
+            cmd.Parameters.AddWithValue("@BlogTitle", title);
             cmd.Parameters.AddWithValue("@BlogAuthor", author);
             cmd.Parameters.AddWithValue("@BlogContent", content);
             int result = cmd.ExecuteNonQuery();
@@ -86,7 +86,7 @@ INSERT INTO [dbo].[Tbl_BlogDotNetCore]
             Console.WriteLine(message);
         }
 
-        public void update(int id,  string title, string author, string content)
+        public void update(int id, string title, string author, string content)
         {
             string query = @"UPDATE [dbo].[Tbl_BlogDotNetCore]
    SET [BlogTitle] = @BlogTitle
@@ -111,7 +111,7 @@ INSERT INTO [dbo].[Tbl_BlogDotNetCore]
         {
             string query = @"Delete From Tbl_BLogDotNetCore where BlogId = @BlogId";
             _connection.Open();
-            SqlCommand cmd = new SqlCommand(query,_connection);
+            SqlCommand cmd = new SqlCommand(query, _connection);
             cmd.Parameters.AddWithValue("@BlogId", id);
             int result = cmd.ExecuteNonQuery();
             _connection.Close();
